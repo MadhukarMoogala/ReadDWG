@@ -64,7 +64,7 @@ Building Dummy Project is optional, as this is test cli project to check if the 
 
 ## Demo
 
-
+<img src="https://github.com/MadhukarMoogala/ReadDWG/blob/master/Webapp-RealDWGSDK.gif" title="WebApp" alt="Demo" width="640">
 
 ### License
 
