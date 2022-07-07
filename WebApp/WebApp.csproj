@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\Rd23\RealDWG 2023\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ReadDWG, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -147,6 +151,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="App_Data\sample.dwg" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

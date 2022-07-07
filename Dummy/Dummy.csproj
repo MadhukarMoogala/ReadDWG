@@ -53,6 +53,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\Rd23\RealDWG 2023\acdbmgd.dll</HintPath>
+    </Reference>
     <Reference Include="ReadDWG, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReadDWG\bin\x64\Debug\ReadDWG.dll</HintPath>
@@ -75,6 +78,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) "C:\Rd22\RealDWG 2022"\</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

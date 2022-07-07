@@ -5,9 +5,12 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadDWG", "ReadDWG\ReadDWG.csproj", "{C6AFF8E8-BD8C-459D-BF7F-7D56B84ACA59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCLI", "Dummy\TestCLI.csproj", "{4FBCD584-7944-4BBA-9D6B-4ACA327EB3F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dummy", "Dummy\Dummy.csproj", "{4FBCD584-7944-4BBA-9D6B-4ACA327EB3F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{822BB148-13F3-4999-8794-DD522906F49E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C6AFF8E8-BD8C-459D-BF7F-7D56B84ACA59} = {C6AFF8E8-BD8C-459D-BF7F-7D56B84ACA59}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
