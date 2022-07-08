@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,6 +14,10 @@ namespace Dummy
 {
     internal class Program
     {
+        /// <summary>
+        ///  This a fake host to make RealDWG things happen,
+        ///  The actual Drawing Host residing in ReadDWG library will replace anyway.
+        /// </summary>
         class FakeHost : HostApplicationServices
         {
             public override string FindFile(string fileName, Database database, FindFileHint hint)
@@ -20,10 +25,16 @@ namespace Dummy
                 throw new NotImplementedException();
             }
         }
-        static void PreLoad(string strRealDwgPath)
+
+        /// <summary>
+        /// AcDbMgd path resolution logic.
+        /// Make sure reference AcDbMgd `CopyLocal` is set to False, we don't want our webapp struggling to find it.
+        /// </summary>
+        static void PreLoad()
         {
-            //
-            // this needs to be outside so I can find acdb23.dll separately from AcDbMgd
+
+            // this needs to be outside so I can find acdbxx.dll separately from AcDbMgd
+            var strRealDwgPath = Environment.GetEnvironmentVariable("REALDWGSDK");
 
             //make sure we find our unmanaged dependencies (add folder to the %PATH%)
             var path = Environment.GetEnvironmentVariable("PATH");
@@ -40,25 +51,33 @@ namespace Dummy
                 return null;
             };
         }
+        /// <summary>
+        /// Initialize a fake AcDbHostApplication service.
+        /// </summary>
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static void LoadAcDbMgd()
         {
-            
-            Autodesk.AutoCAD.Runtime.RuntimeSystem.Initialize(new FakeHost(), 0x409);
+            //Ref: https://docs.microsoft.com/en-us/windows/win32/msi/localizing-the-error-and-actiontext-tables
+
+            int enUS = 0X409;
+            Autodesk.AutoCAD.Runtime.RuntimeSystem.Initialize(new FakeHost(), enUS);
         }
-        static void LoadRealDwgFrom(string folder)
+        static void SetUpRealDwgEnviroment()
         {
-            PreLoad(folder);          
-            LoadAcDbMgd();            
+            PreLoad();
+            LoadAcDbMgd();
         }
         static void Main()
         {
-            LoadRealDwgFrom(@"D:\Rd23\RealDWG 2023\");
+            SetUpRealDwgEnviroment();
+            using (var client = new WebClient())
+            {
+                client.DownloadFile("https://download.autodesk.com/us/samplefiles/acad/blocks_and_tables_-_metric.dwg", "sample.dwg");
+            }
             IProcessDrawing drawing = new ProcessDrawing
             {
-                //ref:https://download.autodesk.com/us/samplefiles/acad/blocks_and_tables_-_metric.dwg
-                DrawingPath = @"sample.dwg"
+              DrawingPath = @"sample.dwg"
             };
             List<string> names = drawing.GetAllLayersAndBlocks();
             names.ForEach((name) => Console.WriteLine($"{name}\n"));
