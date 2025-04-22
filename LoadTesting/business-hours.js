@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Trend } from 'k6/metrics';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 const processingTime = new Trend('processing_time_ms');
 const files = ['sample0.dwg', 'sample1.dwg']; // 2 sample files

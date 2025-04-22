@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div>🎙️ Readout Script: ReadDWG Project + Load Testing Demo</div>
+        <div>"Hi, and welcome to this demo of the ReadDWG project &mdash; a toolchain built to programmatically extract
+            meaningful data from DWG files using a modern, scalable, and API-driven architecture.</div>
+        <br />
+        <div>🏗️ Project Overview</div>
+        <div>The ReadDWG pipeline is designed to automate DWG file processing for web-based applications and backend
+            services. Whether it's a simple layer extraction, block analysis, or integration into a larger BIM workflow
+            &mdash; this system does it in a clean, asynchronous fashion.</div>
+        <br />
+        <div>At its core is a lightweight .NET Web API endpoint. It accepts DWG file uploads, spins off a background job
+            to parse and process the drawing, and then exposes endpoints to:</div>
+        <br />
+        <div>Check the job status</div>
+        <br />
+        <div>Retrieve structured results like layers, blocks, and geometry metadata</div>
+        <br />
+        <div>This is backed by a console app that uses Autodesk&rsquo;s RealDWG SDK to perform actual DWG parsing. The
+            console app runs in a separate process, ensuring safe, isolated execution &mdash; perfect for multi-threaded
+            or microservice setups.</div>
+        <br />
+        <div>This setup is modular and decoupled &mdash; meaning it can be dropped into an existing pipeline or scaled
+            independently with containers or job runners.</div>
+        <br />
+        <div>📊 Load Testing with K6 (Demo)</div>
+        <div>Now, let&rsquo;s talk about how we validate performance and resilience.</div>
+        <br />
+        <div>We use K6, an open-source load testing tool that allows us to simulate real-world traffic patterns.</div>
+        <br />
+        <div>In this demo, we&rsquo;ve written a K6 script that simulates 10 virtual users concurrently uploading DWG
+            files, polling for job completion, and retrieving results &mdash; just like a production app would.</div>
+        <br />
+        <div>Each user randomly picks from a set of DWG samples. The script checks:</div>
+        <br />
+        <div>That each upload returns a valid job ID,</div>
+        <br />
+        <div>That the job status transitions correctly,</div>
+        <br />
+        <div>And that the final result contains both layers and blocks.</div>
+        <br />
+        <div>We run the test for 1 minute, and we define thresholds to ensure quality:</div>
+        <br />
+        <div>95% of requests must complete within 5 seconds,</div>
+        <br />
+        <div>and 95%+ of all checks must pass.</div>
+        <br />
+        <div>At the end, we automatically generate a beautiful HTML report using k6-reporter, which gives us visual
+            breakdowns of response times, pass/fail counts, and system load over time.</div>
+        <br />
+        <div>✅ Summary</div>
+        <div>With ReadDWG, we&rsquo;ve built a production-ready, scriptable DWG parser wrapped in a clean API. And with
+            K6, we&rsquo;ve made it easy to validate performance under load, giving confidence before any deployment.
+        </div>
+        <br />
+        <div>Whether you&rsquo;re building CAD automation tools, integrating drawing intelligence into web platforms, or
+            just need a scalable DWG interpreter &mdash; ReadDWG provides the backbone.</div>
+        <br />
+        <div>Thanks for watching!"</div>
+    </div>
+</body>
+
+</html>

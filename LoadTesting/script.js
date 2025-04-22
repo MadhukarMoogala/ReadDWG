@@ -2,7 +2,8 @@ import http, { file } from 'k6/http';
 import { exec } from 'k6/execution';
 import { check, sleep } from 'k6';
 import { SharedArray } from 'k6/data';
-import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 // ========== INIT STAGE ========== //
 const FILENAMES = [
@@ -10,18 +11,25 @@ const FILENAMES = [
     'sample1.dwg',
     'sample2.dwg'
 ];
-const fileName = FILENAMES[1];
 
-const fileContent = open(`samples/${fileName}`, 'b');
+
+// Preload all files during init stage
+const FILES = FILENAMES.map(name => ({
+    name,
+    content: open(`samples/${name}`, 'b')
+}));
 
 
 export default function () {
 
-    console.log(`VU ${__VU} starting test with file: ${fileName}`);
-    console.log(`Iter ${__ITER} of ${__VU}`);
-    // 1. File Upload
+    // Pick a random file from preloaded array
+    const fileObj = FILES[Math.floor(Math.random() * FILES.length)];
+
+    console.log(`VU ${__VU} using ${fileObj.name}`);
+
+    // 1. Upload
     const uploadRes = http.post('http://localhost:5000/api/drawings/upload', {
-        file: http.file(fileContent, fileName)
+        file: http.file(fileObj.content, fileObj.name)
     });
 
     check(uploadRes, {
@@ -30,7 +38,7 @@ export default function () {
     });
 
     const jobId = JSON.parse(uploadRes.body).jobId;
-    console.log(`VU ${__VU} uploading ${fileName}, jobId: ${jobId}`);
+    console.log(`VU ${__VU} uploading ${fileObj.name}, jobId: ${jobId}`);
     // 2. Status Polling
     let status = 'Processing';
     let attempts = 0;
@@ -51,13 +59,13 @@ export default function () {
     }
 }
 
-// ========== CONFIG ========== //
+//load test scenario where 10 virtual users (VUs) are continuously active for 3 minutes//
 export let options = {
     scenarios: {
         load_test: {
             executor: 'constant-vus',
             vus: 10,
-            duration: '5m'
+            duration: '1m'
         }
     },
     thresholds: {
@@ -66,33 +74,10 @@ export let options = {
     }
 };
 
+// ========== SUMMARY STAGE ========== //
 export function handleSummary(data) {
     return {
-        stdout: textSummary(data, { indent: ' ', enableColors: true })
+        "result.html": htmlReport(data),
+        stdout: textSummary(data, { indent: " ", enableColors: true }),
     };
 }
-
-/*
-const TEMP_DIR = '..\\Build\\WebApi\\Temp';
-
-export function teardown() {
-    console.log(`Wiping ${TEMP_DIR}...`);
-
-    try {
-        // PowerShell command to force-delete everything
-        const result = exec('powershell', `Remove-Item -Path "${TEMP_DIR}\\*" -Recurse -Force`);
-        console.log(`Cleanup completed. Exit code: ${result.exit_code}`);
-
-        // Verify empty directory
-        const verify = exec('powershell', `(Get-ChildItem "${TEMP_DIR}" | Measure-Object).Count`);
-        if (parseInt(verify.stdout) === 0) {
-            console.log("Verification: Directory is empty");
-        } else {
-            console.error(`Verification failed! Files remaining: ${verify.stdout}`);
-        }
-
-    } catch (e) {
-        console.error('Cleanup failed:', e);
-        file.append('cleanup_errors.log', JSON.stringify(e) + '\n');
-    }
-}*/
