@@ -15,7 +15,9 @@ Build.sln
 ├── WebApi.Tests/         # xUnit Test Project
 ```
 
-## 🖼️ Architecture Diagram
+## 📐 Architecture Diagram
+
+![System Architecture](./Design.png)
 
 ## 🚀 How to Run
 
