@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DWGExtractor": {
+      "commandName": "Project",
+      "commandLineArgs": "-i D:\\Work\\Projects\\2025\\ReadDWG\\Build\\test.dwg -o out.txt"
+    }
+  }
+}

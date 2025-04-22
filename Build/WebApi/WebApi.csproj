@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+<PropertyGroup>
+    <!-- Assembly Metadata -->
+    <AssemblyTitle>DWG Extractor API</AssemblyTitle>
+    <AssemblyDescription>A Web API for extracting and processing DWG file data</AssemblyDescription>
+    <Company>Autodesk Inc</Company>
+    <Authors>Madhukar Moogala</Authors>
+    <Product>DWG Extractor</Product>
+    <Copyright>Copyright © 2025</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+</PropertyGroup>     
+  <ItemGroup>
+    <ProjectReference Include="..\DWGExtractor\DWGExtractor.csproj" />
+  </ItemGroup>     
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+  </ItemGroup>     
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

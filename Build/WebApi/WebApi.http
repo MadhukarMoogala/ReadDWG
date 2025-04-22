@@ -1,0 +1,14 @@
+@WebApi_HostAddress = http://localhost:3000
+
+# Upload a DWG file (you need to attach a file in your HTTP client like Postman or VS Code REST client)
+POST {{WebApi_HostAddress}}/api/drawings/upload
+Accept: application/json
+Content-Type: multipart/form-data
+
+### Check job status by ID
+GET {{WebApi_HostAddress}}/api/drawings/status/{{jobId}}
+Accept: application/json
+
+### Get result by ID
+GET {{WebApi_HostAddress}}/api/drawings/result/{{jobId}}
+Accept: application/json

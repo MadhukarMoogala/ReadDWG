@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- Assembly Metadata -->
+        <AssemblyTitle>DWG Processor Lib</AssemblyTitle>
+        <AssemblyDescription>A tool for processing and analyzing DWG files</AssemblyDescription>
+        <Company>Autodesk Inc</Company>
+        <Authors>Madhukar Moogala</Authors>
+        <Product>DWG Processor Lib</Product>
+        <Copyright>Copyright © 2025</Copyright>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+    </PropertyGroup> 
+    <ItemGroup>
+      <!-- Reference AcDbMgd.dll, don't copy to output directory -->
+      <Reference Include="AcDbMgd">
+          <HintPath>$(REALDWGSDK)\AcDbMgd.dll</HintPath>
+          <Private>false</Private>
+      </Reference>
+  </ItemGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+    </ItemGroup>
+
+</Project>

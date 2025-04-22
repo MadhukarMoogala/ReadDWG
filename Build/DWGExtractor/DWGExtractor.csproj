@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Platforms>AnyCPU;x64</Platforms>        
+    </PropertyGroup>
+    <!--Assembly Metadata-->
+    <PropertyGroup>       
+        <AssemblyTitle>DWG Processor</AssemblyTitle>
+        <AssemblyDescription>A lightweight console tool for analyzing DWG files</AssemblyDescription>
+        <Company>Autodesk Inc</Company>
+        <Authors>Madhukar Moogala</Authors>
+        <Product>DWG Processor</Product>
+        <Copyright>Copyright © 2025</Copyright>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\DWGLib\DWGLib.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Reference AcDbMgd.dll -->
+        <Reference Include="AcDbMgd">
+            <HintPath>$(REALDWGSDK)\AcDbMgd.dll</HintPath>
+            <Private>false</Private>
+            <!-- Optional: fallback if environment var is not resolved -->
+            <HintPath Condition=" '$(REALDWGSDK)' == '' ">D:\RealDWG\RD25\RealDWG 2025\AcDbMgd.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>
+
+
